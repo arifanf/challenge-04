@@ -1,13 +1,10 @@
 import React from 'react'
-import Hero from './Hero'
-import SearchBox from './SearchBox'
+
+import styles from './search.module.css'
 
 const Search = () => {
   return (
-    <>
-      <Hero />
-      <SearchBox />
-    </>
+    <div>Search</div>
   )
 }
 
