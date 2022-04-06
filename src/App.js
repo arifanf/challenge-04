@@ -3,14 +3,14 @@ import { Routes, Route } from 'react-router-dom'
 
 import Layout from './Layouts/Layout'
 import CarSearch from './Pages/CarSearch'
-import Info from './Pages/Info'
+import Result from './Pages/Result'
 
 function App() {
   return (
     <Layout>
       <Routes>
         <Route path="/" element={<CarSearch />} />
-        <Route path="/info" element={<Info />} />
+        <Route path="/result" element={<Result />} />
       </Routes>
     </Layout>
   );

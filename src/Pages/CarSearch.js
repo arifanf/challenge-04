@@ -1,6 +1,6 @@
 import React from 'react'
-import Hero from '../Components/Search/Hero'
-import SearchBox from '../Components/Search/SearchBox'
+import Hero from '../Components/Hero/Hero'
+import SearchBox from '../Components/SearchBox/SearchBox'
 
 const CarSearch = () => {
   return (

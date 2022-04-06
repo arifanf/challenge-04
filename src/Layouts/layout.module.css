@@ -17,6 +17,6 @@
 }
 
 .main_content {
-    min-height: calc( (100vh - 85px) + 150px ) ;
-    height: 1px;
+    min-height: calc(100vh - 85px);
+    height: 100vh;
 }
