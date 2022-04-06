@@ -1,60 +1,77 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { useForm } from 'react-hook-form'
 
 import styled from 'styled-components'
+import styles from './search.module.css'
 import '../../index.css'
 
 const SearchBox = () => {
 
+  const [driverOptions, setDriverOptions] = useState(['option1', 'option2'])
+
+  useEffect(() => {
+
+    fetch('https://rent-cars-api.herokuapp.com/admin/car')
+        .then(response => {
+            return response.json()
+        })
+        .then(data => {
+          setDriverOptions([...data.results])
+        })
+        .catch(err => {
+            console.log(err)
+        })
+
+  }, [])
+
+  const { register, handleSubmit } = useForm()
+  const onSubmit = (data) => {
+    console.log(data)
+  }
+
   return (
-    <SearchContainer>
-      <div className="box">
-        <form id="search-car">
+    <div className={styles.content}>
+      <Box>
+        <form id="search-car" onSubmit={handleSubmit(onSubmit)} >
           <div className="container">
             <div className="search_group">
               <label htmlFor="driver">Tipe Driver</label>
-              <select name="driver" id="driver" >
+              <select name="driver" id="driver" {...register('driver')}>
                   <option value="">Pilih Tipe Driver</option>
+                  {driverOptions.map( (item, index) => {
+                      return (
+                          <option value={item} key={index}>{item}</option>
+                      )
+                  })}
               </select>
             </div>
             <div className="search_group">
               <label htmlFor="date">Tanggal</label>
-              <input type="date" id="date" name="date" placeholder="Pilih Tanggal" />
+              <input type="date" id="date" name="date" placeholder="Pilih Tanggal" {...register('date')} />
             </div>
             <div className="search_group">
               <label htmlFor="time">Waktu Jemput/Ambil</label>
-              <input type="time" id="time" name="time" placeholder="Pilih Waktu" />
+              <input type="time" id="time" name="time" placeholder="Pilih Waktu" {...register('time')} />
             </div>
             <div className="search_group">
               <label htmlFor="passenger">Jumlah Penumpang (optional)</label>
-              <input type="number" min="1" max="6" id="passenger" name="passenger" placeholder="Jumlah Penumpang" />
+              <input type="number" id="passenger" name="passenger" placeholder="Jumlah Penumpang" {...register('passenger')} />
             </div>
             <div className="submit">
               <button type="submit">Cari Mobil</button>
             </div>
           </div>
         </form>
-      </div>
-    </SearchContainer> 
+      </Box>
+    </div> 
   )
 }
 
-const SearchContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 1px;
-  .box {
-    display: grid;
-    max-width: 940px;
-    margin-left: auto;
-    margin-right: auto;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    background-color: #f2cede;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
-    position: relative;
-  }
+const Box = styled.div`
+  background-color: #f2cede;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+  position: relative;
   .container {
     display: flex;
     flex-direction: row;
@@ -106,6 +123,9 @@ const SearchContainer = styled.div`
         }
         &[type="date"]:after {
           color: #8A8A8A;
+        }
+        &::placeholder {
+          padding: 0 .6rem;
         }
       }
     }
